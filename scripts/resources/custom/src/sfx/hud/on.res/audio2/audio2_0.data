@@ -1,0 +1,7 @@
+#AUDIO2 LAYER FOR RES ./resources/custom/src/sfx/hud/on.res//
+#uint8 ver
+2
+#string id
+cl
+#double bvol
+1.0

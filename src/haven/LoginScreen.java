@@ -32,6 +32,8 @@ import java.util.*;
 import java.net.URI;
 import java.io.*;
 
+import static haven.Audio.fromres;
+
 public class LoginScreen extends Widget {
     public static final Config.Variable<String> authmech = Config.Variable.prop("haven.authmech", "native");
     public static final Text.Foundry
@@ -43,10 +45,15 @@ public class LoginScreen extends Widget {
     public final String hostname;
     private Text error, progress;
     private Button optbtn;
-    private OptWnd opts;
+    private OptWnd opts = new OptWnd(false);
 
     private WindowX log;
     AccountList accounts;
+
+    static private final Resource mainBGM = Resource.local().loadwait("sfx/custom/loginbgm");
+    static private Audio.CS mainBGMClip = null;
+    static private boolean mainBGMStopped = false;
+    public static HSlider mainBGMVolumeSlider;
 
     private String getpref(String name, String def) {
 	return(Utils.getpref(name + "@" + hostname, def));
@@ -61,6 +68,21 @@ public class LoginScreen extends Widget {
 	optbtn.setgkey(GameUI.kb_opt);
 	if(HttpStatus.mond.get() != null)
 	    adda(new StatusLabel(HttpStatus.mond.get(), 1.0), sz.x - UI.scale(10), UI.scale(10), 1.0, 0.0);
+
+	mainBGMStopped = false;
+	playMainBGM();
+	add(mainBGMVolumeSlider = new HSlider(UI.scale(220), 0, 100, Utils.getprefi("mainBGMVolume", 40)) {
+	    protected void attach(UI ui) {
+		super.attach(ui);
+	    }
+	    public void changed() {
+		if (mainBGMClip != null)
+		    ((Audio.VolAdjust) mainBGMClip).vol = val/100d;
+		Utils.setprefi("mainBGMVolume", val);
+	    }
+	}, bg.sz().x - UI.scale(230) , bg.sz().y - UI.scale(20));
+	add(new Label("BGM Volume"), bg.sz().x - UI.scale(184) , bg.sz().y - UI.scale(36));
+
 	switch(authmech.get()) {
 	case "native":
 	    login = new Credbox();
@@ -75,7 +97,24 @@ public class LoginScreen extends Widget {
 	CharterBook.init();
 	adda(login, bgc.adds(0, 10), 0.5, 0.0).hide();
     }
-    
+
+    private void playMainBGM()
+    {
+	if (!mainBGMStopped && (mainBGMClip == null || !((Audio.Mixer) Audio.player.stream).playing(mainBGMClip)))
+	{
+	    Audio.CS klippi = fromres(mainBGM);
+	    mainBGMClip = new Audio.VolAdjust(klippi, Utils.getprefi("themeSongVolume", 40)/100d);
+	    Audio.play(mainBGMClip);
+	}
+    }
+
+    private void stopMainBGM() {
+	if(mainBGMClip != null){
+	    Audio.stop(mainBGMClip);
+	    mainBGMStopped = true;
+	}
+    }
+
     private void showChangeLog() {
 	log = ui.root.add(new WindowX(new Coord(50, 50), "Changelog"), new Coord(100, 50));
 	log.justclose = true;
@@ -429,6 +468,11 @@ public class LoginScreen extends Widget {
 	}
     }
 
+    public void tick(double dt) {
+	playMainBGM();
+	super.tick(dt);
+    }
+
     public void uimsg(String msg, Object... args) {
 	if(msg == "login") {
 	    mklogin();
@@ -453,6 +497,10 @@ public class LoginScreen extends Widget {
 	if(Config.isUpdate) {
 	    showChangeLog();
 	}
+    }
+
+    public void dispose() {
+	stopMainBGM();
     }
 
     public void draw(GOut g) {

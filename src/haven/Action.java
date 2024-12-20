@@ -3,6 +3,7 @@ package haven;
 import auto.Actions;
 import auto.Equip;
 import auto.InventorySorter;
+import gugiman.automation.AutoCombatDistance;
 import me.ender.CustomCursors;
 import me.ender.GobInfoOpts;
 
@@ -47,7 +48,9 @@ public enum Action {
     EQUIP_BOW(gui -> Equip.twoHanded(gui, Equip.BOW), "Equip Bow"),
     EQUIP_SPEAR(gui -> Equip.twoHanded(gui, Equip.SPEAR), "Equip Boar Spear"),
     EQUIP_SWORD_N_BOARD(gui -> Equip.twoItems(gui, Equip.SHIELD, Equip.SWORD), "Equip Sword & Shield"),
-    
+    EQUIP_PICKAXE(gui -> Equip.twoHanded(gui, Equip.PICKAXE), "Equip Sword & Shield"),
+    EQUIP_LUTE(gui -> Equip.twoHanded(gui, Equip.LUTE), "Equip Sword & Shield"),
+
     //Camera controls
     CAM_ZOOM_IN(gui -> gui.map.zoomCamera(-1), "Camera zoom in"),
     CAM_ZOOM_OUT(gui -> gui.map.zoomCamera(1), "Camera zoom out"),
@@ -75,8 +78,10 @@ public enum Action {
     TOGGLE_GOB_INFO_TIMER(gui -> GobInfoOpts.toggle(GobInfoOpts.InfoPart.TIMER)),
     
     CLEAR_PLAYER_DAMAGE(GobDamageInfo::clearPlayerDamage, "Clear damage from player"),
-    CLEAR_ALL_DAMAGE(GobDamageInfo::clearAllDamage, "Clear damage from everyone");
-    
+    CLEAR_ALL_DAMAGE(GobDamageInfo::clearAllDamage, "Clear damage from everyone"),
+
+    //combat tool
+    AUTO_COMBAT_DISTANCE(AutoCombatDistance::autoDistance, "Auto-distance for cheesing");
     
     public final String name;
     private final Do action;

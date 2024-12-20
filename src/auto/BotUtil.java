@@ -119,7 +119,7 @@ public class BotUtil {
 		    Reactor.FLOWER_CHOICE.first().subscribe(choice -> unpause());
 		    flowerMenu.forceChoose(options);
 		});
-		pause(5000);
+		//pause(5000);
 	    }
 	};
     }

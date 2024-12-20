@@ -39,7 +39,7 @@ public class Audio {
     //FIXME: check if we can use loftar's buffer settings, or switch to custom
     //public static int bufsize = CFG.AUDIO_BUFFER.get();
     private static int bufsize = Utils.getprefi("audiobuf", Math.round(fmt.getSampleRate() * 0.05f)) * fmt.getFrameSize();
-    private static Player player;
+    public static Player player;
 
     public static void setvolume(double volume) {
 	Audio.volume = volume;
@@ -545,8 +545,8 @@ public class Audio {
 	}
     }
 
-    private static class Player extends HackThread {
-	private final CS stream;
+    public static class Player extends HackThread {
+	public final CS stream;
 	private final int nch;
 	private volatile boolean reopen = false;
 

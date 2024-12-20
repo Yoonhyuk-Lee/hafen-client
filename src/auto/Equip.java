@@ -12,6 +12,8 @@ public class Equip {
     public static final Item SWORD = new Equip.Item("Sword", "/bronzesword", "/fyrdsword", "/hirdsword");
     public static final Item SHIELD = new Equip.Item("Shield", "/roundshield");
     public static final Item SPEAR = new Equip.Item("Spear", "/boarspear");
+    public static final Item PICKAXE = new Equip.Item("Pickaxe", "/pickaxe");
+    public static final Item LUTE = new Equip.Item("Lute", "/lute");
 
     //These items can't be placed into a belt
     private static final String[] FORBIDDEN = {
@@ -69,18 +71,23 @@ public class Equip {
 		    return;
 		}
 		leftHand.take();
-		BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
+		//BotUtil.waitHeldChanged(gui);
 		item.putBack();
-		BotUtil.waitHeldChanged(gui);
+		//BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
 	    }
 
 	    item.take();
 	    equipory.sendDrop(HAND_LEFT);
-	    BotUtil.waitHeldChanged(gui);
+	   // BotUtil.waitHeldChanged(gui);
+	    BotUtil.pause(5);
 
-	    if(leftHand != null || rightHand != null) {
+	    if(leftHand != null || rightHand != null)
+	    {
 		item.putBack();
-		BotUtil.waitHeldChanged(gui);
+		//BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
 	    }
 	});
 	bot.start(gui.ui, true);
@@ -139,9 +146,11 @@ public class Equip {
 	    if(firstSlot != INVALID) {
 		item = optFirst.get();
 		item.take();
-		BotUtil.waitHeldChanged(gui);
+		//BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
 		equipory.sendDrop(firstSlot);
-		BotUtil.waitHeldChanged(gui);
+		//BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
 		item.putBack();
 		BotUtil.pause(5);
 	    }
@@ -149,9 +158,11 @@ public class Equip {
 	    if(secondSlot != INVALID) {
 		item = optSecond.get();
 		item.take();
-		BotUtil.waitHeldChanged(gui);
+		//BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
 		equipory.sendDrop(secondSlot);
-		BotUtil.waitHeldChanged(gui);
+		//BotUtil.waitHeldChanged(gui);
+		BotUtil.pause(5);
 		item.putBack();
 	    }
 	});
