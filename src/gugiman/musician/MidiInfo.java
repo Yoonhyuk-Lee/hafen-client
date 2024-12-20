@@ -5,8 +5,8 @@ import haven.res.ui.music.MusicWnd;
 
 import java.io.File;
 
-public class MidiInfo {
-    
+public class MidiInfo
+{
     public final Text 	name;
     public final String stringName;
     public final File 	midiFile;

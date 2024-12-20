@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MidiList extends Listbox<MidiInfo> {
+public class MidiList extends Listbox<MidiInfo>
+{
     private static final String MIDI_FILE_EXTENSION = ".mid";
     private static final Text.Foundry font = new Text.Foundry(Text.sans, 15).aa(true);
     private final List<MidiInfo> items = new ArrayList<>();
@@ -23,15 +24,22 @@ public class MidiList extends Listbox<MidiInfo> {
 	scanAndAddMidiFiles(System.getProperty("user.dir"));
     }
     
-    private void scanAndAddMidiFiles(String directory) {
+    private void scanAndAddMidiFiles(String directory)
+    {
 	File dir = new File(directory);
-	if (dir.isDirectory()) {
+	if (dir.isDirectory())
+	{
 	    File[] files = dir.listFiles();
-	    if (files != null) {
-		for (File file : files) {
-		    if (file.isDirectory()) {
+	    if (files != null)
+	    {
+		for (File file : files)
+		{
+		    if (file.isDirectory())
+		    {
 			scanAndAddMidiFiles(file.getAbsolutePath());
-		    } else if (file.getName().toLowerCase().endsWith(MIDI_FILE_EXTENSION)) {
+		    }
+		    else if (file.getName().toLowerCase().endsWith(MIDI_FILE_EXTENSION))
+		    {
 			add(file.getName(), file);
 		    }
 		}
@@ -39,7 +47,8 @@ public class MidiList extends Listbox<MidiInfo> {
 	}
     }
     
-    private void add(String name, File file) {
+    private void add(String name, File file)
+    {
 	MidiInfo item = new MidiInfo(name, font, file);
 	map.put(name, item);
 	items.add(item);
@@ -51,7 +60,8 @@ public class MidiList extends Listbox<MidiInfo> {
 	    items.remove(item);
     }
     
-    public void clear() {
+    public void clear()
+    {
 	map.clear();
 	items.clear();
     }
@@ -67,7 +77,8 @@ public class MidiList extends Listbox<MidiInfo> {
     }
     
     @Override
-    protected void drawitem(GOut g, MidiInfo item, int i) {
+    protected void drawitem(GOut g, MidiInfo item, int i)
+    {
 	g.aimage(item.name.tex(), new Coord(itemh + 5, itemh / 2), 0, 0.5);
     }
 }
