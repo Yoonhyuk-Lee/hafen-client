@@ -31,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
+import gugiman.combat.CombatConfig;
 import haven.ItemInfo.AttrCache;
 
 public class Buff extends Widget implements ItemInfo.ResOwner, Bufflist.Managed {
@@ -284,5 +285,53 @@ public class Buff extends Widget implements ItemInfo.ResOwner, Bufflist.Managed 
     public boolean mousedown(MouseDownEvent ev) {
 	wdgmsg("cl", ev.c.sub(imgoff), ev.b, ui.modflags());
 	return(true);
+    }
+
+    public void altdrawOpening(GOut g, final Coord center, int offset)
+    {
+	final int x = center.x;
+	final int y = center.y;
+	try
+	{
+	    Tex img = res.get().flayer(Resource.imgc).tex();
+	    Coord isz = img.sz();
+	    g.chcolor(255, 255, 255, 255);
+
+	    int ameteri = ameter();
+	    if(ameteri >= 0)
+	    {
+		g.image(Buff.cframe, new Coord(x + offset - UI.scale(3), y - UI.scale(20) - UI.scale(3)));
+
+		g.chcolor(0, 0, 0, 255);
+		g.frect(new Coord(x + offset, y - UI.scale(20) + UI.scale(37) - UI.scale(3)), Buff.ametersz);
+
+		g.chcolor(255, 255, 255, 255);
+		g.frect(new Coord(x + offset, y - UI.scale(20) + UI.scale(37) - UI.scale(3)), new Coord(ameteri * Buff.ametersz.x / 100, Buff.ametersz.y));
+	    }
+	    else
+	    {
+		g.image(Buff.frame, new Coord(x + offset - UI.scale(3), y - UI.scale(20) - UI.scale(3)));
+	    }
+
+	    if (CombatConfig.improvedOpeningsImageColor.containsKey(res.get().name))
+	    {
+		g.chcolor(CombatConfig.improvedOpeningsImageColor.get(res.get().name));
+		g.frect(new Coord(x + offset, y - UI.scale(20)), isz);
+		g.chcolor(Color.WHITE);
+		if(ameteri != nmeter)
+		{
+		    ntext = null;
+		    nmeter = ameteri;
+		}
+	    }
+	    else
+	    {
+		g.image(img, new Coord(x + offset, y - UI.scale(20)));
+	    }
+
+	    if(getNMeter() >= 0)
+		g.aimage(nmeter(), new Coord(x + offset, y - UI.scale(20)).add(isz).sub(1, 1), 1, 1);
+
+	} catch (Loading ignored) {}
     }
 }
