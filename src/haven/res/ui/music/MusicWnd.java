@@ -18,7 +18,7 @@ public class MusicWnd extends Window
     public static int pitchValue = 6;
 
     protected MidiList midiList;
-    protected Button play, stop, shit;
+    protected Button play, stop;
     protected HSlider pitch;
 
     public MusicWnd() {
@@ -44,13 +44,10 @@ public class MusicWnd extends Window
 
 	add(midiList, c.add(0, 20));
 
-	play = new Button(UI.scale(80), "재생");
+	play = new Button(UI.scale(80), "Play");
 	add(play, c.add(0, 180));
-
-	shit = new Button(UI.scale(80), "병신짓");
-	add(shit, c.add(120, 180));
 	
-	stop = new Button(UI.scale(80), "정지");
+	stop = new Button(UI.scale(80), "Stop");
 	add(stop, c.add(240, 180));
     }
 
@@ -75,10 +72,7 @@ public class MusicWnd extends Window
 		item.Stop();
 	    }
 	}
-	else if(sender == shit)
-	{
-	    doShittyThing();
-	}
+
 	super.wdgmsg(sender, msg, args);
     }
 
@@ -98,13 +92,5 @@ public class MusicWnd extends Window
 	final double nowTime = System.currentTimeMillis() / 1000. - this.start;
 	wdgmsg("play", new Object[]{key, nowTime});
 	wdgmsg("stop", new Object[]{key, nowTime});
-    }
-
-    public void doShittyThing()
-    {
-	for(int j=0;j<36;++j)
-	{
-	    PlayAndStopNote(j);
-	}
     }
 }

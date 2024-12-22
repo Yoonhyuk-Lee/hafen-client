@@ -69,7 +69,7 @@ public class Session implements Resource.Resolver {
     public int connfailed = 0;
     public String connerror = null;
     LinkedList<PMessage> uimsgs = new LinkedList<PMessage>();
-    String username;
+    public String username;
     final Map<Integer, CachedRes> rescache = new TreeMap<Integer, CachedRes>();
     public final Glob glob;
     public final CharacterInfo character;

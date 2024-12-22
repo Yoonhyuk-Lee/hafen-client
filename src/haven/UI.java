@@ -53,6 +53,10 @@ import haven.render.Environment;
 import haven.render.Render;
 
 public class UI {
+    static UI ui = null;
+    public static UI getInstance() {
+	return ui;
+    }
     public static int MOD_SHIFT = KeyMatch.S, MOD_CTRL = KeyMatch.C, MOD_META = KeyMatch.M, MOD_SUPER = KeyMatch.SUPER;
     public static int MOD_CTRL_ALT = MOD_CTRL | MOD_META;
     enum KeyMod {
@@ -66,8 +70,8 @@ public class UI {
     }
     public RootWidget root;
     private final List<Grab> grabs = new CopyOnWriteArrayList<Grab>();
-    private final Map<Integer, Widget> widgets = new TreeMap<Integer, Widget>();
-    private final Map<Widget, Integer> rwidgets = new HashMap<Widget, Integer>();
+    protected final Map<Integer, Widget> widgets = new TreeMap<Integer, Widget>();
+    protected final Map<Widget, Integer> rwidgets = new HashMap<Widget, Integer>();
     Environment env;
     Receiver rcvr;
     public Coord mc = Coord.z, lcc = Coord.z;
@@ -855,11 +859,26 @@ public class UI {
     }
 
     public void error(String msg) {
+	lastError = msg;
 	msg(new ErrorMessage(msg));
     }
 
     public void msg(String msg) {
 	msg(new InfoMessage(msg));
+    }
+
+    private String lastError = null;
+
+    public void dropLastError()
+    {
+	lastError = null;
+    }
+
+    public String getLastError()
+    {
+	String forSend = lastError;
+	lastError = null;
+	return forSend;
     }
 
     private void setmods(InputEvent ev) {

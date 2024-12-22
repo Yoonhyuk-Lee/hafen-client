@@ -1,0 +1,7 @@
+#CODEENTRY LAYER FOR RES ./resources/custom/src/ui/barterbox.res//
+#int32 length
+1
+#String key[0]
+wdg
+#String value[0]
+haven.res.ui.barterbox.Shopbox

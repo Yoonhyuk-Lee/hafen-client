@@ -1,0 +1,4 @@
+#CODE LAYER FOR RES ./resources/custom/src/ui/barterbox.res//
+#String class_name
+#Note: the .class file will have the same name as this file
+haven.res.ui.barterbox.Shopbox$IconTip

@@ -27,6 +27,8 @@
 package haven;
 
 import java.util.*;
+
+import gugiman.UIEx;
 import haven.render.*;
 import haven.render.gl.*;
 import java.awt.Toolkit;
@@ -463,7 +465,8 @@ public interface GLPanel extends UIPanel, UI.Context {
 	}
 
 	public UI newui(UI.Runner fun) {
-	    UI prevui, newui = new UI(p, new Coord(p.getSize()), fun);
+	    UI prevui, newui = new UIEx(p, new Coord(p.getSize()), fun);
+	    UI.ui = newui;
 	    newui.env = p.env();
 	    if(p.getParent() instanceof Console.Directory)
 		newui.cons.add((Console.Directory)p.getParent());

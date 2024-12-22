@@ -114,11 +114,18 @@ public class DrinkMeter extends Widget {
 
     public static void add(UI ui) {
 	if(ui.gui == null) {return;}
-	ui.gui.addcmeter(new DrinkMeter());
+	DrinkMeter drinkMeter = new DrinkMeter();
+	ui.gui.addcmeter(drinkMeter);
+	ui.gui.setDrinkMeter(drinkMeter);
     }
 
     public static void rem(UI ui) {
 	if(ui.gui == null) {return;}
 	ui.gui.delcmeter(DrinkMeter.class);
+	ui.gui.setDrinkMeter(null);
+    }
+
+    public boolean canDrink(){
+	return max > 0;
     }
 }

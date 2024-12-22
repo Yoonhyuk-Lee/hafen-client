@@ -47,6 +47,7 @@ import java.util.List;
 import static haven.ItemFilter.*;
 import haven.render.Location;
 import me.ender.alchemy.AlchemyWnd;
+import me.ender.ui.DrinkMeter;
 
 import static haven.Inventory.invsq;
 
@@ -106,7 +107,17 @@ public class GameUI extends ConsoleHost implements Console.Directory, UI.Notice.
     public ActWindow craftlist, buildlist, actlist;
     public TimerPanel timers;
     public StudyWnd studywnd;
-    
+
+    private DrinkMeter drinkMeter = null;
+
+    public DrinkMeter getDrinkMeter() {
+	return drinkMeter;
+    }
+
+    public void setDrinkMeter(DrinkMeter drinkMeter) {
+	this.drinkMeter = drinkMeter;
+    }
+
     public static abstract class BeltSlot {
 	public final int idx;
 
