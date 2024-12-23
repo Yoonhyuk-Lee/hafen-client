@@ -25,7 +25,7 @@ public class Music {
     protected int tickToMS(final long tick, final float ms_per_tick)
     {
 	final int millisecond = (int)(tick * ms_per_tick);
-	return millisecond - (millisecond % 32);
+	return millisecond;
     }
 
     protected int noteToChord(final int note)

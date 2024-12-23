@@ -267,6 +267,9 @@ public class Fightsess extends Widget {
     private ArrayList<Buff> sortbyOpening(final Set<Buff> buffs)
     {
 	ArrayList<Buff> orderedOpening = new ArrayList<>(buffs);
+	if(orderedOpening.size() < 2)
+	    return orderedOpening;
+
 	orderedOpening.sort((o2, o1) -> Integer.compare(o1.ameter(), o2.ameter()));
 
 	Buff maneuver = null;
